@@ -14,3 +14,14 @@ class Users(db.Model):
             "email": self.email,
             "password": self.password
         }
+        
+    def serialize_with_tasks(self, tasks):
+        task_list = [task.serialize() for task in tasks]
+
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "password": self.password,
+            "tasks": task_list
+        }

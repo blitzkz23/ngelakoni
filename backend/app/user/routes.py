@@ -1,4 +1,5 @@
 from flask import request, jsonify
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.extensions import db
 
 from app.user import userBp
@@ -39,4 +40,16 @@ def get_user_by_id(id):
     return jsonify({
         "success": True,
         "data": user.serialize()
+    })
+    
+# Get User with Task
+@userBp.route('/task', methods=['GET'], strict_slashes=False)
+@jwt_required(locations=['headers'])
+def get_user_with_task():
+    current_user_id = get_jwt_identity()
+    user = Users.query.filter_by(id=current_user_id).first()
+    tasks = Tasks.query.filter_by(user_id=current_user_id).all()
+    
+    return jsonify({
+        "user": user.serialize_with_tasks(tasks)
     })
