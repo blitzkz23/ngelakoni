@@ -41,26 +41,23 @@ def register():
 def login():
     data = request.get_json()
     
-    username = data.get('username', None)
+    email = data.get('email', None)
     password = data.get('password', None)
     
-    # Either user use email or username
-    if not username:
+    # Fields are required
+    if not email or not password:
         return jsonify({
-            "message": "Please fill your username"
-        }), 400
-        
-    if not password:
-        return jsonify({
-            "message": "Please fill your password"
-        })
+            "message": "Email or password are required!"
+        }), 422
 
-    user = Users.query.filter_by(username=username).first()
+    user = Users.query.filter_by(email=email).first()
         
     if not user or not check_password_hash(user.password, password):
         return jsonify({
             "message": "Username or password is invalid!",
-            "password": user.password
+            "upassword": user.password,
+            "password": password,
+            "hash_result": check_password_hash(user.password, password)
         }), 422
         
     access_token = create_access_token(identity=user.id)
