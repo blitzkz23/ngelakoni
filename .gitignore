@@ -1,4 +1,4 @@
 *.env
-frontend/migrations
+backend/migrations
 frontend/node_modules
 __pycache__/
