@@ -15,7 +15,7 @@ window.onload = function () {
 
     const toastLive = document.getElementById("live-toast");
     const toastMsg = document.getElementById("toast-body");
-    toastMsg.innerHTML = "Email/password salah";
+    toastMsg.innerHTML = "Email/password tidak boleh kosong";
     const toast = new bootstrap.Toast(toastLive);
 
     // Validation
@@ -27,18 +27,19 @@ window.onload = function () {
       password: password,
     });
 
-    // Call Login API
+    // Call Login Endpoint
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
     xhr.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        const response = JSON.parse(this.response);
-        console.log(this.message);
+        const response = JSON.parse(this.response); 
 
         localStorage.setItem("access_token", response.access_token);
         window.location.href = "http://127.0.0.1:5000/";
       } else {
-        toastMsg.innerHTML = this.response;
+        const response = JSON.parse(this.response);
+        var message = response.message;
+        toastMsg.innerHTML = message;
         toast.show();
       }
     };

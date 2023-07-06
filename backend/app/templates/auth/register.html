@@ -1,6 +1,6 @@
 {% extends '/auth/base.html' %} {% block content %}
 <section class="container w-50 bg-white rounded p-5">
-  <form id="form-registration">
+  <form id="form-register">
     <!-- bagian toast error-->
     <div
       aria-live="polite"
@@ -11,7 +11,7 @@
         class="toast-container p-3 top-0 start-50 translate-middle-x"
         id="toastPlacement"
       >
-        <div class="toast text-bg-danger" id="liveToast">
+        <div class="toast text-bg-danger" id="live-toast">
           <div class="toast-body" id="toast-body"></div>
         </div>
       </div>
@@ -27,7 +27,7 @@
         class="toast-container p-3 top-0 start-50 translate-middle-x"
         id="toastPlacement"
       >
-        <div class="toast text-bg-success" id="liveToastSuccess">
+        <div class="toast text-bg-success" id="live-toast-success">
           <div class="toast-body" id="toast-body-success"></div>
         </div>
       </div>
@@ -47,7 +47,7 @@
       <input type="password" class="form-control" id="password" />
     </div>
     <div class="mb-3">
-      <label for="confirm_password" class="form-label">Confirm Password</label>
+      <label for="confirm_password" class="form-label">Konfirmasi Password</label>
       <input type="password" class="form-control" id="confirm_password" />
     </div>
     <p>Sudah punya akun? <a href="{{url_for('frontend.login')}}">Masuk disini</a></p>
@@ -57,5 +57,5 @@
   </form>
 </section>
 
-<script src="{{url_for('static', filename="/js/script-registration.js")}}"></script>
+<script src="{{url_for('static', filename="/js/script-register.js")}}"></script>
 {% endblock %}

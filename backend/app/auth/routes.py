@@ -55,9 +55,6 @@ def login():
     if not user or not check_password_hash(user.password, password):
         return jsonify({
             "message": "Username or password is invalid!",
-            "upassword": user.password,
-            "password": password,
-            "hash_result": check_password_hash(user.password, password)
         }), 422
         
     access_token = create_access_token(identity=user.id)
