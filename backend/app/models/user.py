@@ -6,6 +6,7 @@ class Users(db.Model):
     email = db.Column(db.String(128), unique=True, nullable=False)
     password = db.Column(db.String(1024), nullable=False)
     tasks = db.relationship('Tasks', back_populates='user')
+    projects = db.relationship('Projects', back_populates='user')
     
     def serialize(self):
         return {
