@@ -142,6 +142,85 @@ addForm.addEventListener("submit", (e) => {
   xhr.send(data);
 });
 
+// Edit task
+const myModalEdit = document.getElementById("myModalEdit");
+myModalEdit.addEventListener("show.bs.modal", (e) => {
+  const dataId = e.relatedTarget.attributes["data-id"];
+
+  // Init AJAX
+  const xhr = new XMLHttpRequest();
+  l;
+  const url = API_HOST + "/tasks/" + dataId.value;
+
+  // Get old task value first
+  xhr.open("GET", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+  xhr.setRequestHeader(
+    "Authorization",
+    `Bearer ${localStorage.getItem("access_token")}`
+  );
+
+  xhr.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const data = JSON.parse(this.response);
+      const oldTitle = document.getElementById("edit-title");
+      const oldDescription = document.getElementById("edit-description");
+
+      oldTitle.value = data.data.title;
+      oldDescription.value = data.data.description;
+    }
+  };
+
+  xhr.send();
+
+  // Get edit task value and update data
+  const editForm = document.getElementById("edit-form");
+  editForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Get data from form
+    const newTitle = document.getElementById("edit-title").value;
+    const newDescription = document.getElementById("edit-description").value;
+
+    // Toast config
+    const toastLive = document.getElementById("live-toast-edit");
+    const toastMsgEdit = document.getElementById("toast-body-edit");
+    const toast = new bootstrap.Toast(toastLive);
+
+    // Validation
+    if (!newTitle | !newDescription) {
+      toastMsgEdit.innerHTML = "Isi dari judul/deskripsi tidak boleh kosong!";
+      toast.show();
+    }
+
+    const data = JSON.stringify({
+      title: newTitle,
+      description: newDescription,
+    });
+
+    // Init AJAX
+    const xhr = new XMLHttpRequest();
+    const url = API_HOST + "/tasks/" + dataId.value;
+    xhr.open("PUT", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+    xhr.setRequestHeader(
+      "Authorization",
+      `Bearer ${localStorage.getItem("access_token")}`
+    );
+    xhr.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        //close the modal after edit data
+        const myModalEdit = bootstrap.Modal.getInstance("#myModalEdit");
+        myModalEdit.hide();
+        //reset form and reload page
+        editForm.reset();
+        location.reload();
+      }
+    };
+    xhr.send(data);
+  });
+});
+
 // Logout Function
 const logout = document.getElementById("logout");
 logout.addEventListener("click", (e) => {
