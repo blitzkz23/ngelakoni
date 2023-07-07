@@ -28,6 +28,27 @@ def get_all_task():
         "data": result
     }), 200
     
+# Get Task By ID
+@taskBp.route('/<int:id>', methods=['GET'], strict_slashes=False)
+@jwt_required(locations=['headers'])
+def get_task_by_id(id):
+    current_user_id = get_jwt_identity()
+    
+    task = Tasks.query.filter_by(id=id).first()
+    
+    if not task:
+        return jsonify({"message": "Task not found!"}), 404
+    
+    if current_user_id != task.user_id:
+        return jsonify({
+            "message": "Unauthorized Action"
+        }), 422
+        
+    return jsonify({
+        "success": True,
+        "data": task.serialize(),
+    }), 200
+    
 # Create Task
 @taskBp.route('/', methods=['POST'], strict_slashes=False)
 @jwt_required(locations=['headers'])
@@ -107,4 +128,30 @@ def delete_task(id):
     return jsonify({
         "success": True,
         "message": "Task has been deleted sucessfully!"
+    }), 200
+    
+# Update Tasks's Status
+@taskBp.route("/status/<int:id>", methods=["PUT"], strict_slashes=False)
+@jwt_required(locations=["headers"])
+def update_status(id):
+    current_user_id = get_jwt_identity()
+
+    task = Tasks.query.filter_by(id=id).first()
+
+    if not task:
+        return jsonify({"message": "Task not found!"}), 404
+    
+    if current_user_id != task.user_id:
+        return jsonify({
+            "message": "Unauthorized Action"
+        }), 422
+
+    data = request.get_json()
+    status = data.get("status")
+
+    task.status = status
+    db.session.commit()
+
+    return jsonify({
+        "success": True, "message": "Status updated successfully"
     }), 200

@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  ngelakoni-db:
+    image: postgres:latest
+    container_name: ngelakoni-db
+    environment:
+      - POSTGRES_DB=ngelakoni_app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=naufal
+    ports:
+      - 5434:5432
+    volumes:
+      - ngelakoni-volume:/var/lib/postgresql/data
+    networks:
+      ngelakoni-network:
+        aliases:
+          - postgres
+
+  # ngelakoni-app:
+  #   image: python:3.10
+  #   container_name: ngelakoni-app
+  #   ports:
+  #     - 5000:5000
+  #   volumes:
+  #     - ./backend:/app # Bind mount
+  #   command: bash -c "pip install -r ./app/requirements.txt && flask --app ./app/app run"
+  #   environment:
+  #     - DB_HOST=ngelakoni-db
+  #     - DB_PORT=5432
+  #     - DB_NAME=ngelakoni_app
+  #     - DB_USER=postgres
+  #     - DB_PASSWORD=naufal
+  #   depends_on:
+  #     - ngelakoni-db
+  #   networks:
+  #     - ngelakoni-network
+
+networks:
+  ngelakoni-network:
+    name: ngelakoni-network
+
+volumes:
+  ngelakoni-volume:
+    name: ngelakoni-volume
