@@ -113,12 +113,12 @@ function populateTodoItem(task) {
   p.appendChild(document.createTextNode(task.description));
 
   // Set bootrstrap attribute
-  article.setAttribute("class", "border b-3 drag");
+  article.setAttribute("class", "border p-3 drag mb-2");
   article.setAttribute("ondragstart", "drag(event)");
   article.setAttribute("draggable", "true");
   article.setAttribute("id", task.id);
 
-  badgeDelete.setAttribute("class", "badge bg-danger");
+  badgeDelete.setAttribute("class", "badge bg-danger me-2");
   badgeDelete.setAttribute("href", "#");
   badgeDelete.setAttribute("data-id", task.id);
   badgeDelete.setAttribute("data-bs-toggle", "modal");
