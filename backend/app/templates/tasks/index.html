@@ -10,8 +10,12 @@
       id="todo"
     >
       <h2>Todo</h2>
-      <!-- <article class="border p-3 drag" ondragstart="drag(event)" draggable="true" id="drag1"><h4 id="judul-1">Judul</h4><p id="description-1">Lorem ipsum dolor sit amet.</p><button class="badge bg-danger" id="badge-delete"
-            onclick="deleteEvent(this.id)">Delete</button><button class="badge bg-info" id="badge-edit"
+      <!-- <article class="border p-3 drag" ondragstart="drag(event)" draggable="true" id="drag1">
+        <h4 id="judul-1">Judul</h4>
+        <p id="description-1">Lorem ipsum dolor sit amet.</p>
+        <button class="badge bg-danger" id="badge-delete"
+            onclick="deleteEvent(this.id)">Delete</button>
+        <button class="badge bg-info" id="badge-edit"
             data-bs-toggle="modal" data-bs-target="#myModalEdit" onclick="editEvent(this.id)">Edit</button>
         </article> -->
     </div>
@@ -22,6 +26,10 @@
       id="done"
     >
       <h2>Done</h2>
+            <!-- <article class="border p-3 drag" ondragstart="drag(event)" draggable="true" id="drag1"><h4 id="judul-1">Judul</h4><p id="description-1">Lorem ipsum dolor sit amet.</p><button class="badge bg-danger" id="badge-delete"
+            onclick="deleteEvent(this.id)">Delete</button><button class="badge bg-info" id="badge-edit"
+            data-bs-toggle="modal" data-bs-target="#myModalEdit" onclick="editEvent(this.id)">Edit</button>
+        </article> -->
     </div>
   </div>
   <div class="text-center">
@@ -51,7 +59,7 @@
         class="bg-dark position-relative bd-example-toasts"
       >
         <div class="toast-container position-absolute p-3" id="toastPlacement">
-          <div class="toast text-bg-danger" id="liveToastAdd">
+          <div class="toast text-bg-danger" id="live-toast-add">
             <div class="toast-body" id="toast-body">
               Isian tidak boleh kosong!!
             </div>
@@ -119,7 +127,7 @@
         class="bg-dark position-relative bd-example-toasts"
       >
         <div class="toast-container p-3 top-0 start-0" id="toastPlacement">
-          <div class="toast text-bg-danger" id="liveToastEdit">
+          <div class="toast text-bg-danger" id="live-toast-edit">
             <div class="toast-body" id="toast-body">
               Isian tidak boleh kosong!!
             </div>
