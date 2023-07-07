@@ -149,7 +149,6 @@ myModalEdit.addEventListener("show.bs.modal", (e) => {
 
   // Init AJAX
   const xhr = new XMLHttpRequest();
-  l;
   const url = API_HOST + "/tasks/" + dataId.value;
 
   // Get old task value first
