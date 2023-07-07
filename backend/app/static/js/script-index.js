@@ -220,6 +220,51 @@ myModalEdit.addEventListener("show.bs.modal", (e) => {
   });
 });
 
+// Delete Task
+const myModalDelete = document.getElementById("myModalDelete");
+myModalDelete.addEventListener("show.bs.modal", (e) => {
+  const dataId = e.relatedTarget.attributes["data-id"];
+  const deleteForm = document.getElementById("delete-form");
+
+  deleteForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Init AJAX
+    const xhr = new XMLHttpRequest();
+    const url = API_HOST + "/tasks/" + dataId.value;
+
+    xhr.open("DELETE", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+    xhr.setRequestHeader(
+      "Authorization",
+      `Bearer ${localStorage.getItem("access_token")}`
+    );
+    xhr.onreadystatechange = function () {
+      if (this.readyState == 4 && this.response) {
+        const response = JSON.parse(this.response);
+
+        const myModalDelete = bootstrap.Modal.getInstance("#myModalDelete");
+        myModalDelete.hide();
+
+        const alertLoc = document.getElementById("alert-loc");
+        const alertEl = document.createElement("div");
+        alertEl.setAttribute("class", "alert alert-success");
+        alertEl.setAttribute("role", "alert");
+        alertEl.innerHTML = response.message;
+
+        alertLoc.append(alertEl);
+
+        document.getElementById(dataId.value).classList.add("d-none");
+        var delayInMilliseconds = 3000;
+        setTimeout(function () {
+          alertEl.classList.add("d-none");
+        }, delayInMilliseconds);
+      }
+    };
+    xhr.send();
+  });
+});
+
 // Logout Function
 const logout = document.getElementById("logout");
 logout.addEventListener("click", (e) => {
