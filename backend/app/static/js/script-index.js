@@ -2,6 +2,70 @@ const API_HOST = "http://127.0.0.1:5000/api";
 const todoColumn = document.getElementById("todo");
 const doneColumn = document.getElementById("done");
 
+// Drag N' Drop Functionality
+function allowDrop(event) {
+  event.preventDefault();
+}
+
+function drag(event) {
+  event.dataTransfer.setData("text", event.target.id);
+}
+
+function drop(event) {
+  event.preventDefault();
+  const data = event.dataTransfer.getData("text");
+  event.target.appendChild(document.getElementById(data));
+
+  const dataId = event.srcElement.lastChild.id;
+  checkStatus(dataId);
+}
+
+function checkStatus(id) {
+  const xhr = new XMLHttpRequest();
+  const url = API_HOST + "/tasks/" + id;
+
+  xhr.open("GET", url, true);
+  xhr.setRequestHeader(
+    "Authorization",
+    `Bearer ${localStorage.getItem("access_token")}`
+  );
+
+  xhr.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const response = JSON.parse(this.response);
+
+      updateStatus(id, response.data.status);
+    }
+  };
+
+  return xhr.send();
+}
+
+function updateStatus(id, status) {
+  const xhr = new XMLHttpRequest();
+  const url = API_HOST + "/tasks/status/" + id;
+
+  const data = JSON.stringify({
+    status: !status,
+  });
+
+  xhr.open("PUT", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+  xhr.setRequestHeader(
+    "Authorization",
+    `Bearer ${localStorage.getItem("access_token")}`
+  );
+
+  xhr.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      location.reload();
+    }
+  };
+
+  xhr.send(data);
+}
+// End of Drag N Drop Related
+
 // Check Login Status
 const isLogin = localStorage.getItem("access_token");
 if (!isLogin) {
