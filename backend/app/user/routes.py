@@ -43,7 +43,7 @@ def get_user_by_id(id):
     })
     
 # Get User with Task
-@userBp.route('/task', methods=['GET'], strict_slashes=False)
+@userBp.route('/tasks', methods=['GET'], strict_slashes=False)
 @jwt_required(locations=['headers'])
 def get_user_with_task():
     current_user_id = get_jwt_identity()

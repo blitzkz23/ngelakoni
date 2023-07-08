@@ -75,11 +75,46 @@ if (!isLogin) {
 // Selector Onchange Event
 const selector = document.getElementById("select-project");
 selector.addEventListener("change", (e) => {
+  e.preventDefault();
   const projectName = document.getElementById("project-name");
-  const selectedItem = e.target.value;
+  const selectedOption = e.target.options[e.target.selectedIndex];
+  const selectedOptionId = selectedOption.getAttribute("id");
 
-  if (selectedItem != "Ubah Project") {
-    projectName.innerHTML = selectedItem;
+  // Clear existing tasks
+  todoColumn.innerHTML = "";
+  doneColumn.innerHTML = "";
+
+  // Recreate Header
+  todoHeader = document.createElement("h2");
+  todoHeader.appendChild(document.createTextNode("Todo"));
+  todoColumn.appendChild(todoHeader);
+
+  doneHeader = document.createElement("h2");
+  doneHeader.appendChild(document.createTextNode("Done"));
+  doneColumn.appendChild(doneHeader);
+
+  if (selectedOptionId !== "Ubah Project") {
+    projectName.innerHTML = selectedOption.value;
+
+    // Init AJAX
+    const xhr = new XMLHttpRequest();
+    const url = API_HOST + "/projects/" + selectedOptionId + "/tasks";
+
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader(
+      "Authorization",
+      `Bearer ${localStorage.getItem("access_token")}`
+    );
+    xhr.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        const response = JSON.parse(this.response);
+        response.data.tasks.forEach((task) => {
+          populateTodoItem(task);
+        });
+      }
+    };
+
+    xhr.send();
   }
 });
 
@@ -119,7 +154,8 @@ addFormProject.addEventListener("submit", (e) => {
   xhr.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       // Close modal after adding data
-      const myModalAddProject = bootstrap.Modal.getInstance("#myModalAddProject");
+      const myModalAddProject =
+        bootstrap.Modal.getInstance("#myModalAddProject");
       myModalAddProject.hide();
 
       // Reset form
@@ -147,23 +183,6 @@ window.onload = function () {
     window.location.href = "http://127.0.0.1:5000/auth/login";
   }
 
-  // Init AJAX for tasks
-  const xhr = new XMLHttpRequest();
-  const url = API_HOST + "/tasks";
-
-  xhr.open("GET", url, true);
-  xhr.setRequestHeader("Authorization", `Bearer ${accessToken}`);
-  xhr.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      const tasks = JSON.parse(this.response);
-      tasks["data"].forEach((task) => {
-        populateTodoItem(task);
-      });
-    }
-  };
-
-  xhr.send();
-
   // Init AJAX for projects
   const xhr2 = new XMLHttpRequest();
   const url2 = API_HOST + "/projects";
@@ -173,14 +192,25 @@ window.onload = function () {
   xhr2.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       const projects = JSON.parse(this.response);
+
+      // Drop down in the main menu
       const dropDown = document.getElementById("select-project");
       projects["data"].forEach((project) => {
         const selectItem = document.createElement("option");
-        selectItem.setAttribute("id", "project" + project.id);
+        selectItem.setAttribute("id", project.id);
         selectItem.setAttribute("project-id", project.id);
         selectItem.setAttribute("project-title", project.title);
         selectItem.appendChild(document.createTextNode(project.title));
         dropDown.appendChild(selectItem);
+
+        // Drop down in add button
+        const dropDownAdd = document.getElementById("select-project-add");
+        const selectItemAdd = document.createElement("option");
+        selectItemAdd.setAttribute("id", project.id);
+        selectItemAdd.setAttribute("project-id", project.id);
+        selectItemAdd.setAttribute("project-title", project.title);
+        selectItemAdd.appendChild(document.createTextNode(project.title));
+        dropDownAdd.appendChild(selectItemAdd);
       });
     }
   };
@@ -245,6 +275,10 @@ addForm.addEventListener("submit", (e) => {
   // Get data from form
   const title = document.getElementById("title").value;
   const description = document.getElementById("description").value;
+  const projectSelector = document.getElementById("select-project-add");
+  const selectedIndex = projectSelector.selectedIndex;
+  const selectedOption = projectSelector.options[selectedIndex];
+  const selectedOptionId = selectedOption.getAttribute("id");
 
   // Toast config
   const toastLive = document.getElementById("live-toast-add");
@@ -257,9 +291,16 @@ addForm.addEventListener("submit", (e) => {
     toast.show();
   }
 
+  if (!selectedOptionId) {
+    toastMsgAdd.innerHTML =
+      "Anda belum memiliki project, silahkan buat terlebih dahulu!";
+    toast.show();
+  }
+
   const data = JSON.stringify({
     title: title,
     description: description,
+    project_id: selectedOptionId,
   });
 
   // Init AJAX
@@ -286,8 +327,8 @@ addForm.addEventListener("submit", (e) => {
       location.reload();
     } else {
       //konfigurasi toast berhasil
-      const toastLive = document.getElementById("liveToast");
-      const toastMsg = document.getElementById("toast-body");
+      const toastLive = document.getElementById("live-toast-add");
+      const toastMsg = document.getElementById("toast-body-add");
       const toast = new bootstrap.Toast(toastLive);
       toastMsg.innerHTML = "Terjadi kesalahan";
       toast.show();
@@ -449,8 +490,11 @@ logout.addEventListener("click", (e) => {
     if (this.status == 200) {
       localStorage.removeItem("access_token");
       window.location.href = "http://127.0.0.1:5000/auth/login";
-    } else {
-      alert("Something went wrong");
+    }
+    // Token expired
+    if (this.status == 401) {
+      localStorage.removeItem("access_token");
+      window.location.href = "http://127.0.0.1:5000/auth/login";
     }
   };
 

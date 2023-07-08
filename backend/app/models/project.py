@@ -13,3 +13,13 @@ class Projects(db.Model):
             "title": self.title,
             "user_id": self.user_id
         }
+    
+    def serialize_with_tasks(self, tasks):
+        task_list = [task.serialize() for task in tasks]
+
+        return {
+            "id": self.id,
+            "title": self.title,
+            "user_id": self.user_id,
+            "tasks": task_list
+        }

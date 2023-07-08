@@ -46,7 +46,7 @@
       ondragover="allowDrop(event)"
       id="todo"
     >
-      <h2>Todo</h2>
+      <h2 class="mb-2">Todo</h2>
       <!-- <article class="border p-3 drag" ondragstart="drag(event)" draggable="true" id="drag1">
         <h4 id="judul-1">Judul</h4>
         <p id="description-1">Lorem ipsum dolor sit amet.</p>
@@ -62,7 +62,7 @@
       ondragover="allowDrop(event)"
       id="done"
     >
-      <h2>Done</h2>
+      <h2 class="mb-2">Done</h2>
       <!-- <article class="border p-3 drag" ondragstart="drag(event)" draggable="true" id="drag1"><h4 id="judul-1">Judul</h4><p id="description-1">Lorem ipsum dolor sit amet.</p><button class="badge bg-danger" id="badge-delete"
             onclick="deleteEvent(this.id)">Delete</button><button class="badge bg-info" id="badge-edit"
             data-bs-toggle="modal" data-bs-target="#myModalEdit" onclick="editEvent(this.id)">Edit</button>
@@ -118,7 +118,7 @@
         <!-- Form -->
         <form id="add-form">
           <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
+            <label for="title" class="form-label">Judul</label>
             <input
               type="text"
               class="form-control"
@@ -126,8 +126,19 @@
               placeholder="Title"
             />
           </div>
+          <!-- Button Change Project -->
+          <label for="select-project-add" class="form-label">Pilih Project</label>
+          <select
+          class="form-select form-control-sm mb-3"
+          aria-label="Default select example"
+          id="select-project-add"
+          >
+            <!--  <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option> -->
+          </select>
           <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
+            <label for="description" class="form-label">Deskripsi</label>
             <input
               type="text"
               class="form-control"

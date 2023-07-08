@@ -53,3 +53,22 @@ def create_project():
         "success": True,
         "data": new_project.serialize()
     }), 200
+    
+# Get Project with Tasks
+@projectBp.route('/<int:id>/tasks', methods=['GET'], strict_slashes=False)
+@jwt_required(locations=['headers'])
+def get_project_with_tasks(id):
+    current_user_id = get_jwt_identity()
+    
+    project = Projects.query.filter_by(id=id).first()
+    
+    if current_user_id != project.user_id:
+        return jsonify({
+            "message": "Unauthorized Action"
+    }), 422
+        
+    tasks = Tasks.query.filter_by(project_id=id).all()
+    
+    return jsonify({
+        "data": project.serialize_with_tasks(tasks)
+    })    

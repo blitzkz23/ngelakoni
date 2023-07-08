@@ -42,7 +42,7 @@ def get_task_by_id(id):
     if current_user_id != task.user_id:
         return jsonify({
             "message": "Unauthorized Action"
-        }), 422
+    }), 422
         
     return jsonify({
         "success": True,
@@ -58,13 +58,14 @@ def create_task():
     
     title = data['title']
     description = data.get('description', None)
+    project_id = data.get('project_id', None)
     
     if not title or not current_user_id:
         return jsonify({
             "message": "Incomplete data"
         }), 422
         
-    new_task = Tasks(title=title, description=description, user_id=current_user_id)
+    new_task = Tasks(title=title, description=description, user_id=current_user_id, project_id=project_id)
     
     db.session.add(new_task)
     db.session.commit()
