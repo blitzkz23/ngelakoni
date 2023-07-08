@@ -192,6 +192,33 @@ window.onload = function () {
   xhr2.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       const projects = JSON.parse(this.response);
+      if (projects["data"].length != 0) {
+        // If project is not empty assign the todo for the fies
+        const defaultProject = projects["data"][0];
+        const defaultProjectId = defaultProject.id;
+        const projectName = document.getElementById("project-name");
+        projectName.innerHTML = defaultProject.title;
+
+        // Init AJAX to get todo
+        const xhr3 = new XMLHttpRequest();
+        const url = API_HOST + "/projects/" + defaultProjectId + "/tasks";
+
+        xhr3.open("GET", url, true);
+        xhr3.setRequestHeader(
+          "Authorization",
+          `Bearer ${localStorage.getItem("access_token")}`
+        );
+        xhr3.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            const response = JSON.parse(this.response);
+            response.data.tasks.forEach((task) => {
+              populateTodoItem(task);
+            });
+          }
+        };
+
+        xhr3.send();
+      }
 
       // Drop down in the main menu
       const dropDown = document.getElementById("select-project");
