@@ -72,6 +72,73 @@ if (!isLogin) {
   window.location.href = "http://127.0.0.1:5000/auth/login";
 }
 
+// Selector Onchange Event
+const selector = document.getElementById("select-project");
+selector.addEventListener("change", (e) => {
+  const projectName = document.getElementById("project-name");
+  const selectedItem = e.target.value;
+
+  if (selectedItem != "Ubah Project") {
+    projectName.innerHTML = selectedItem;
+  }
+});
+
+// Add Project
+const addFormProject = document.getElementById("add-form-project");
+addFormProject.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  // Get data from form
+  const title = document.getElementById("title-project").value;
+
+  // Toast config
+  const toastLive = document.getElementById("live-toast-add-project");
+  const toastMsgAdd = document.getElementById("toast-body-add-project");
+  toastMsgAdd.innerHTML = "Judul tidak boleh kosong!";
+  const toast = new bootstrap.Toast(toastLive);
+
+  // Validation
+  if (!title) return toast.show();
+
+  // Payload
+  const data = JSON.stringify({
+    title: title,
+  });
+
+  // Init AJAX
+  const xhr = new XMLHttpRequest();
+  const url = API_HOST + "/projects";
+
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+  xhr.setRequestHeader(
+    "Authorization",
+    `Bearer ${localStorage.getItem("access_token")}`
+  );
+
+  xhr.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      // Close modal after adding data
+      const myModalAddProject = bootstrap.Modal.getInstance("#myModalAddProject");
+      myModalAddProject.hide();
+
+      // Reset form
+      addFormProject.reset();
+
+      // Refresh page
+      location.reload();
+    } else {
+      //konfigurasi toast berhasil
+      const toastLive = document.getElementById("liveToast");
+      const toastMsg = document.getElementById("toast-body");
+      const toast = new bootstrap.Toast(toastLive);
+      toastMsg.innerHTML = "Terjadi kesalahan";
+      toast.show();
+    }
+  };
+  xhr.send(data);
+});
+
 // Get All Task
 window.onload = function () {
   const accessToken = localStorage.getItem("access_token");
@@ -80,7 +147,7 @@ window.onload = function () {
     window.location.href = "http://127.0.0.1:5000/auth/login";
   }
 
-  // Init AJAX
+  // Init AJAX for tasks
   const xhr = new XMLHttpRequest();
   const url = API_HOST + "/tasks";
 
@@ -96,6 +163,29 @@ window.onload = function () {
   };
 
   xhr.send();
+
+  // Init AJAX for projects
+  const xhr2 = new XMLHttpRequest();
+  const url2 = API_HOST + "/projects";
+
+  xhr2.open("GET", url2, true);
+  xhr2.setRequestHeader("Authorization", `Bearer ${accessToken}`);
+  xhr2.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      const projects = JSON.parse(this.response);
+      const dropDown = document.getElementById("select-project");
+      projects["data"].forEach((project) => {
+        const selectItem = document.createElement("option");
+        selectItem.setAttribute("id", "project" + project.id);
+        selectItem.setAttribute("project-id", project.id);
+        selectItem.setAttribute("project-title", project.title);
+        selectItem.appendChild(document.createTextNode(project.title));
+        dropDown.appendChild(selectItem);
+      });
+    }
+  };
+
+  xhr2.send();
 };
 
 // Populate todo
@@ -113,7 +203,7 @@ function populateTodoItem(task) {
   p.appendChild(document.createTextNode(task.description));
 
   // Set bootrstrap attribute
-  article.setAttribute("class", "border p-3 drag mb-2");
+  article.setAttribute("class", "border p-2 drag mb-2");
   article.setAttribute("ondragstart", "drag(event)");
   article.setAttribute("draggable", "true");
   article.setAttribute("id", task.id);
@@ -156,12 +246,12 @@ addForm.addEventListener("submit", (e) => {
   const title = document.getElementById("title").value;
   const description = document.getElementById("description").value;
 
-  //   Toast config
+  // Toast config
   const toastLive = document.getElementById("live-toast-add");
   const toastMsgAdd = document.getElementById("toast-body-add");
   const toast = new bootstrap.Toast(toastLive);
 
-  //   Validation
+  // Validation
   if (!title | !description) {
     toastMsgAdd.innerHTML = "Judul/deskripsi tidak boleh kosong";
     toast.show();
@@ -190,7 +280,7 @@ addForm.addEventListener("submit", (e) => {
       myModalAdd.hide();
 
       // Reset form
-      addForm.requestFullscreen();
+      addForm.reset();
 
       // Refresh page
       location.reload();
@@ -328,6 +418,17 @@ myModalDelete.addEventListener("show.bs.modal", (e) => {
     xhr.send();
   });
 });
+
+// Clock Function
+let p = document.getElementById("jam");
+
+function myTime() {
+  let jam = new Date();
+  p.innerHTML = jam.toLocaleTimeString([], {
+    hour12: false,
+  });
+}
+setInterval(myTime, 1000);
 
 // Logout Function
 const logout = document.getElementById("logout");
