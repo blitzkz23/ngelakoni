@@ -1,4 +1,4 @@
-# Ngelakoni
+# Badhe Ngelakoni
 
 # Problem Description
 In order to measure the efficiency of their employee, Ridwan a project manager on a company want to know the progress of their fellow workers.  In order to do that as a web developer I decide to collaborate with him to create a simple todo application, with functionality that we've discussed.
