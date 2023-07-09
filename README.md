@@ -30,7 +30,6 @@ In order to fulfill Ridwan's request here are some requirement I've decided upon
 
 ##  With Python Environment
 
-    ```
     # Build virtual environment
     python3 -m venv .venv
     source .venv/bin/activate
@@ -50,11 +49,11 @@ In order to fulfill Ridwan's request here are some requirement I've decided upon
     flask --app app run
 
     # Open 127.0.0.1:5000
-    ```
+
 
 ## With Docker Compose
 
-    ```
+
     # Build compose
     docker compose up -d
 
@@ -77,4 +76,3 @@ In order to fulfill Ridwan's request here are some requirement I've decided upon
     # If there is version_num the migration is success
 
     # Open 127.0.0.1:5000
-    ```
