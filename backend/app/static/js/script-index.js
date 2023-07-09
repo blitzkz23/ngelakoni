@@ -68,7 +68,7 @@ function updateStatus(id, status) {
 
 // Generate Colors for Todo
 function generateRandomPastelColor() {
-  var colors = ['#F9EDC8', '#C9F9CD', '#C8EBF8', '#F9DFC8', '#D5F4DC']; // Add the similar color
+  var colors = ["#F9EDC8", "#C9F9CD", "#C8EBF8", "#F9DFC8", "#D5F4DC"]; // Add the similar color
 
   var randomColor = colors[Math.floor(Math.random() * colors.length)];
   return randomColor;
@@ -121,7 +121,7 @@ selector.addEventListener("change", (e) => {
       if (this.readyState == 4 && this.status == 200) {
         const response = JSON.parse(this.response);
         response.data.tasks.forEach((task) => {
-          populateTodoItem(task);
+          populateTodoItem(task, selectedOption.value);
         });
       }
     };
@@ -224,7 +224,7 @@ window.onload = function () {
           if (this.readyState == 4 && this.status == 200) {
             const response = JSON.parse(this.response);
             response.data.tasks.forEach((task) => {
-              populateTodoItem(task);
+              populateTodoItem(task, defaultProject.title);
             });
           }
         };
@@ -258,24 +258,30 @@ window.onload = function () {
 };
 
 // Populate todo
-function populateTodoItem(task) {
+function populateTodoItem(task, project_name) {
   // Create element of todo cards
   const article = document.createElement("article");
   const h4 = document.createElement("h4");
   const p = document.createElement("p");
   const badgeEdit = document.createElement("button");
   const badgeDelete = document.createElement("button");
+  const todoHeader = document.createElement("div");
+  const badgeProject = document.createElement("p");
 
   // Append data
   h4.appendChild(document.createTextNode(task.title));
   h4.setAttribute("id", task.id);
   p.appendChild(document.createTextNode(task.description));
+  badgeProject.appendChild(document.createTextNode(project_name));
 
   // Set bootrstrap attribute
   article.setAttribute("class", "p-2 drag mb-3");
   article.setAttribute("ondragstart", "drag(event)");
   article.setAttribute("draggable", "true");
   article.setAttribute("id", task.id);
+
+  todoHeader.setAttribute("class", "d-flex justify-content-between");
+  badgeProject.setAttribute("class", "badge");
 
   badgeDelete.setAttribute("class", "badge bg-danger me-2");
   badgeDelete.setAttribute("href", "#");
@@ -293,7 +299,10 @@ function populateTodoItem(task) {
   badgeEdit.setAttribute("data-bs-target", "#myModalEdit");
   badgeEdit.appendChild(document.createTextNode("Edit"));
 
-  article.appendChild(h4);
+  todoHeader.appendChild(h4);
+  todoHeader.appendChild(badgeProject);
+
+  article.appendChild(todoHeader);
   article.appendChild(p);
   article.appendChild(badgeDelete);
   article.appendChild(badgeEdit);

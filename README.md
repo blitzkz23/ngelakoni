@@ -1,15 +1,55 @@
 # Ngelakoni
 
+# Problem Description
+In order to measure the efficiency of their employee, Ridwan a project manager on a company want to know the progress of their fellow workers.  In order to do that as a web developer I decide to collaborate with him to create a simple todo application, with functionality that we've discussed.
+
+# Requirements
+In order to fulfill Ridwan's request here are some requirement I've decided upon:
+
+## Technical Requirement
+- Python 3.10 or higher
+- Postgres
+- Docker
+
+## Bussiness Requirement
+- User able to authenticate before entering the application home
+- User could create a task related to project they are currently working on
+- User could create a new task, edit, and mark it as done
+- User could change project
+
 # How to run
 
 ```
+    # With Python Environment
+
+    # Build virtual environment
+    python3 -m venv .venv
+    source .venv/bin/activate
+
+    # Install dependencies
+    cd backend
+    pip install -r requirements.txt
+
+    # Edit the .env-example with your own config and rename it to .env
+
+    # Flask db migration command
+    flask db init
+    flask db migrate -m "Init migration"
+    flask db upgrade
+
+    # Run project
+    flask --app app run
+    ----------------------------------------------------------------
+    # With Docker Compose (Currently only the postgre container is working, the flask container still error will fix later)
+
     # Build file
     docker compose up
 
-    # Enter into flask container bash shell
+    # Enter into flask container bash shell (Skip this step)
     docker exec -it ngelakoni-app bash
 
     # Flask db migration command
+    cd backend
     flask db init
     flask db migrate -m "Init migration"
     flask db upgrade
@@ -23,4 +63,8 @@
     \dt
     select * from alembic_version;
     # If there is version_num the migration is success
+
+    # Run project
+    cd backend
+    flask --app app run
 ```

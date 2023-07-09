@@ -31,6 +31,10 @@ body {
     font-weight: bold;
 }
 
+.badge {
+    background-color: #D8AA92;
+}
+
 #nav-container {
     padding-top: 40px;
     padding-bottom: 40px;
