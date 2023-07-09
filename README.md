@@ -48,6 +48,8 @@ In order to fulfill Ridwan's request here are some requirement I've decided upon
 
     # Run project
     flask --app app run
+
+    # Open 127.0.0.1:5000
     ```
 
 ## With Docker Compose
