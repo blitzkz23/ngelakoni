@@ -48,16 +48,15 @@ In order to fulfill Ridwan's request here are some requirement I've decided upon
     # Run project
     flask --app app run
     ----------------------------------------------------------------
-    # With Docker Compose (Currently only the postgre container is working, the flask container still error will fix later)
+    # With Docker Compose 
 
     # Build file
     docker compose up
 
-    # Enter into flask container bash shell (Skip this step)
+    # Enter into flask container bash shell 
     docker exec -it ngelakoni-app bash
 
     # Flask db migration command
-    cd backend
     flask db init
     flask db migrate -m "Init migration"
     flask db upgrade
@@ -72,7 +71,5 @@ In order to fulfill Ridwan's request here are some requirement I've decided upon
     select * from alembic_version;
     # If there is version_num the migration is success
 
-    # Run project
-    cd backend
-    flask --app app run
+    # Open 127.0.0.1:5000
 ```
