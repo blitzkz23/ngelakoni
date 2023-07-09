@@ -68,7 +68,8 @@ function updateStatus(id, status) {
 
 // Generate Colors for Todo
 function generateRandomPastelColor() {
-  var colors = ["#F9EDC8", "#C9F9CD", "#C8EBF8", "#F9DFC8"];
+  var colors = ['#F9EDC8', '#C9F9CD', '#C8EBF8', '#F9DFC8', '#D5F4DC']; // Add the similar color
+
   var randomColor = colors[Math.floor(Math.random() * colors.length)];
   return randomColor;
 }
