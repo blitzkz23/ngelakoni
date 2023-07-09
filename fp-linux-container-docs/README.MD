@@ -16,7 +16,7 @@ In order for this application able to be deployed in any kind of environment, I 
 
 # Project Run Documentation
 
-### Docker and Docker Compose
+### Docker and Docker Compose 
 1. Run docker compose and check whether the container already up
     ```
     # Run build docker compose
@@ -47,3 +47,49 @@ In order for this application able to be deployed in any kind of environment, I 
 
     ![](../docs/5-connected.png)
 
+
+### Backup and Restore Script
+1. Run backup script manually
+    ```
+    cd scripts
+    ./backup.sh
+
+    # You will be prompted the password of db, enter it just like in docker compose
+    ```
+    ![](../docs/6-backup.png)
+
+2. Schedule Backup with cron
+    ```
+    crontab -e
+
+    0 0 * * * /path/to/script # This will run the backup script every day at midnight, because the first 0 represents minutes and the second one represent hours, which basically 00:00 A.M.
+    ```
+
+    ![](../docs/7-backup-cron.png)
+
+3. Restore db
+    ```
+    # First copy the backup.dump file from host to container
+    ./copy_backup_to_container.sh
+
+    # Check if the file has been copied
+    docker exec -it ngelakoni-db bash
+    ls home
+    ```
+
+    ![](../docs/8-copy-backup-host-to-container.png)
+
+    ```
+    # Finally run restore.sh
+    ./restore.sh
+
+    # Enter postgres container
+    docker exec -it ngelakoni-db bash
+
+    # Enter psql shell
+    psql -U postgres ngelakoni_app_restore
+    ```
+
+    Data will also be successfully restored like below:
+
+    ![](../docs/9-restoredb.png)
