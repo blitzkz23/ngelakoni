@@ -16,7 +16,7 @@ In order for this application able to be deployed in any kind of environment, I 
 
 # Project Run Documentation
 
-## Docker and Docker Compose
+### Docker and Docker Compose
 1. Run docker compose and check whether the container already up
     ```
     # Run build docker compose
@@ -35,11 +35,15 @@ In order for this application able to be deployed in any kind of environment, I 
 
     ![](../docs/2-flask-app.png)
 
+    The logs will looks like below image:
+
     ![](../docs/3-flask-logs.png)
 
-3. Open dbeaver, and connect to the postgres inside docker container based on the docker compose environment(port, password, etc).  If success there will be green checkmark.
+3. Open dbeaver, and connect to the postgres inside docker container based on the docker compose environment(port, password, etc).  
 
     ![](../docs/4-dbconnect.png)
+
+    If success there will be green checkmark.
 
     ![](../docs/5-connected.png)
 
