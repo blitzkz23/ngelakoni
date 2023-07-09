@@ -25,7 +25,7 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - ./backend:/flask-app # Bind mount
+      - ./flask:/flask-app # Bind mount
     environment:
       - DB_HOST=ngelakoni-db
       - DB_PORT=5432
