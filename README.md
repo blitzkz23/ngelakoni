@@ -53,6 +53,7 @@ In order to fulfill Ridwan's request here are some requirement I've decided upon
     ```
 
 ## With Docker Compose
+
     ```
     # Build compose
     docker compose up -d
