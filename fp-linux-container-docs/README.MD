@@ -26,7 +26,20 @@ In order for this application able to be deployed in any kind of environment, I 
     docker compose ps
     ```
 
-2. Open localhost:5000, to see if the project already up
+    ![](../docs/1-compose-run.png)
 
-3. Open dbeaver, and connect to the postgres inside docker compose with the same configuration(port, password, etc)
+2. Open localhost:5000, to see if the project already up.  You can also check docker logs to see the log of flask container
+    ```
+    docker logs ngelakoni-app
+    ```
+
+    ![](../docs/2-flask-app.png)
+
+    ![](../docs/3-flask-logs.png)
+
+3. Open dbeaver, and connect to the postgres inside docker container based on the docker compose environment(port, password, etc).  If success there will be green checkmark.
+
+    ![](../docs/4-dbconnect.png)
+
+    ![](../docs/5-connected.png)
 
