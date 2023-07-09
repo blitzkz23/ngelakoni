@@ -16,6 +16,11 @@ In order to fulfill Ridwan's request here are some requirement I've decided upon
 - User could create a task related to project they are currently working on
 - User could create a new task, edit, and mark it as done
 - User could change project
+- There are tag that show which tag belong to which project
+
+## ERD
+
+![](docs/erd.drawio.png)
 
 # How to run
 
