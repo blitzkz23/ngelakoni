@@ -15,25 +15,28 @@ services:
       ngelakoni-network:
         aliases:
           - postgres
+    restart: always
 
-  # ngelakoni-app:
-  #   image: python:3.10
-  #   container_name: ngelakoni-app
-  #   ports:
-  #     - 5000:5000
-  #   volumes:
-  #     - ./backend:/app # Bind mount
-  #   command: bash -c "pip install -r ./app/requirements.txt && flask --app ./app/app run"
-  #   environment:
-  #     - DB_HOST=ngelakoni-db
-  #     - DB_PORT=5432
-  #     - DB_NAME=ngelakoni_app
-  #     - DB_USER=postgres
-  #     - DB_PASSWORD=naufal
-  #   depends_on:
-  #     - ngelakoni-db
-  #   networks:
-  #     - ngelakoni-network
+  ngelakoni-app:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ngelakoni-app
+    ports:
+      - 5000:5000
+    volumes:
+      - ./backend:/flask-app # Bind mount
+    environment:
+      - DB_HOST=ngelakoni-db
+      - DB_PORT=5432
+      - DB_NAME=ngelakoni_app
+      - DB_USER=postgres
+      - DB_PASSWORD=naufal
+    depends_on:
+      - ngelakoni-db
+    networks:
+      - ngelakoni-network
+    restart: always
 
 networks:
   ngelakoni-network:

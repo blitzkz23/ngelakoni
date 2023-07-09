@@ -1,8 +1,8 @@
 FROM python:3.10
 
-COPY . ./app
+COPY . ./flask-app
 
-WORKDIR /app
+WORKDIR /flask-app
 
 RUN pip install -r requirements.txt
 
@@ -13,4 +13,4 @@ RUN pip install -r requirements.txt
 
 EXPOSE 5000
 
-CMD ["flask", "--app", "app", "run"]
+CMD ["flask", "--app", "app", "run", "--host", "0.0.0.0"]

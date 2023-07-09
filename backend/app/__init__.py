@@ -24,4 +24,9 @@ def create_app(config_class = Config):
     app.register_blueprint(frontendBp, url_prefix='/')
 
     return app
+
+app = create_app()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')
     
