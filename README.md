@@ -28,9 +28,9 @@ In order to fulfill Ridwan's request here are some requirement I've decided upon
 
 # How to run
 
-```
-    # With Python Environment
+##  With Python Environment
 
+    ```
     # Build virtual environment
     python3 -m venv .venv
     source .venv/bin/activate
@@ -48,11 +48,12 @@ In order to fulfill Ridwan's request here are some requirement I've decided upon
 
     # Run project
     flask --app app run
-    ----------------------------------------------------------------
-    # With Docker Compose 
+    ```
 
-    # Build file
-    docker compose up
+## With Docker Compose
+    ```
+    # Build compose
+    docker compose up -d
 
     # Enter into flask container bash shell 
     docker exec -it ngelakoni-app bash
@@ -73,4 +74,4 @@ In order to fulfill Ridwan's request here are some requirement I've decided upon
     # If there is version_num the migration is success
 
     # Open 127.0.0.1:5000
-```
+    ```
