@@ -3,7 +3,7 @@
 # How to run
 
 ```
-# Build file
+    # Build file
     docker compose up
 
     # Enter into flask container bash shell

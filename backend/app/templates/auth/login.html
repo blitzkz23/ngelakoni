@@ -28,18 +28,20 @@
         </div>
       </div>
       <!-- Toast End -->
-      <h1 class="text-center">Login Page</h1>
+      <div class="text-center" id="logo-container">
+        <img src="{{url_for('static', filename="/img/logo-no-background.svg")}}" id="ngelakoni-logo">
+      </div>
       <div class="mb-3">
-        <label for="login-email" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="login-email" />
+        <label for="login-email" class="form-label">Alamat Email</label>
+        <input type="email" class="form-control" id="login-email" placeholder="Masukkan email Anda disini..." />
       </div>
       <div class="mb-3">
         <label for="login-password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="login-password" />
+        <input type="password" class="form-control" id="login-password" placeholder="Masukkan password Anda disini..." />
       </div>
-      <p>Belum punya akun? <a href="{{url_for('frontend.register')}}">Daftar disini</a></p>
+      <p class="mb-5">Belum punya akun? <a href="{{url_for('frontend.register')}}">Daftar di sini</a></p>
       <button type="submit" class="btn btn-primary w-100" id="btn-login">
-        Login
+        Masuk
       </button>
     </form>
   </section>

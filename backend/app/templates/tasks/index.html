@@ -1,9 +1,9 @@
 {% extends 'base.html' %} {% block content %}
-<section class="container mt-5 min-vh-100" id="task" data-bs-spy="scroll">
+<section class="container mt-3 min-vh-100" id="task" data-bs-spy="scroll">
   <div id="alert-loc"></div>
 
   <!-- Project Header -->
-  <div class="row mt-5">
+  <div class="row mt-2">
     <div class="col p-3" id="project-sect">
       <h2>Project Sekarang:</h2>
       <h4 id="project-name" class="mt-3"><h4>
@@ -46,7 +46,7 @@
       ondragover="allowDrop(event)"
       id="todo"
     >
-      <h2 class="mb-2">Todo</h2>
+      <h2 class="mb-4">Todo</h2>
       <!-- <article class="border p-3 drag" ondragstart="drag(event)" draggable="true" id="drag1">
         <h4 id="judul-1">Judul</h4>
         <p id="description-1">Lorem ipsum dolor sit amet.</p>
@@ -62,7 +62,7 @@
       ondragover="allowDrop(event)"
       id="done"
     >
-      <h2 class="mb-2">Done</h2>
+      <h2 class="mb-4">Done</h2>
       <!-- <article class="border p-3 drag" ondragstart="drag(event)" draggable="true" id="drag1"><h4 id="judul-1">Judul</h4><p id="description-1">Lorem ipsum dolor sit amet.</p><button class="badge bg-danger" id="badge-delete"
             onclick="deleteEvent(this.id)">Delete</button><button class="badge bg-info" id="badge-edit"
             data-bs-toggle="modal" data-bs-target="#myModalEdit" onclick="editEvent(this.id)">Edit</button>
@@ -82,7 +82,7 @@
   </div>
 </section>
 
-<footer class="bg-light text-center text-lg-start">
+<footer class="text-center text-lg-start" id="footer-container">
   <h3 id="jam" class="text-center p-3 bg-primary m-0 text-white"></h3>
 </footer>
 

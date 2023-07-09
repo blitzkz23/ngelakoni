@@ -66,6 +66,17 @@ function updateStatus(id, status) {
 }
 // End of Drag N Drop Related
 
+// Generate Colors for Todo
+function generateRandomPastelColor() {
+  var colors = ["#F9EDC8", "#C9F9CD", "#C8EBF8", "#F9DFC8"];
+  var randomColor = colors[Math.floor(Math.random() * colors.length)];
+  return randomColor;
+}
+
+function generateLightGrayColor() {
+  return "#D3D3D3";
+}
+
 // Check Login Status
 const isLogin = localStorage.getItem("access_token");
 if (!isLogin) {
@@ -260,7 +271,7 @@ function populateTodoItem(task) {
   p.appendChild(document.createTextNode(task.description));
 
   // Set bootrstrap attribute
-  article.setAttribute("class", "border p-2 drag mb-2");
+  article.setAttribute("class", "p-2 drag mb-3");
   article.setAttribute("ondragstart", "drag(event)");
   article.setAttribute("draggable", "true");
   article.setAttribute("id", task.id);
@@ -288,8 +299,12 @@ function populateTodoItem(task) {
 
   if (task.status == true) {
     article.setAttribute("style", "text-decoration:line-through");
+    const bgColor = generateLightGrayColor();
+    article.style.backgroundColor = bgColor;
     doneColumn.appendChild(article);
   } else {
+    const bgColor = generateRandomPastelColor();
+    article.style.backgroundColor = bgColor;
     todoColumn.appendChild(article);
   }
 }

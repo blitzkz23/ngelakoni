@@ -1,0 +1,35 @@
+.btn-primary {
+    background-color: #D8AA92;
+    border: 0px;
+}
+
+#btn-login,
+#liveToastBtn {
+    height: 48px;
+}
+
+#btn-login:hover {
+    background-color: #D8AA92;
+    opacity: 0.5
+}
+
+#liveToastBtn:hover {
+    background-color: #D8AA92;
+    opacity: 0.5;
+}
+
+a {
+    color: #DD8433;
+}
+
+body {
+    background-image: url("../img/bg-wood-pattern.png");
+}
+
+#ngelakoni-logo {
+    width: 600px;
+}
+
+#logo-container {
+    margin-bottom: 78px;
+}

@@ -33,26 +33,30 @@
       </div>
     </div>
     <!-- end bagian toast -->
-    <h1 class="text-center">Registration Page</h1>
+    <h1 class="text-center mb-5">Registration Page</h1>
     <div class="mb-3">
       <label for="name" class="form-label">Nama Lengkap</label>
-      <input type="text" class="form-control" id="name" />
+      <input type="text" class="form-control" id="name" 
+      placeholder="Masukkan nama Anda disini..."/>
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="email" />
+      <input type="email" class="form-control" id="email" 
+      placeholder="Masukkan email Anda disini..."/>
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
-      <input type="password" class="form-control" id="password" />
+      <input type="password" class="form-control" id="password" 
+      placeholder="Masukkan password Anda disini..."/>
     </div>
     <div class="mb-3">
       <label for="confirm_password" class="form-label">Konfirmasi Password</label>
-      <input type="password" class="form-control" id="confirm_password" />
+      <input type="password" class="form-control" id="confirm_password" 
+      placeholder="Masukkan ulang password Anda disini..."/>
     </div>
-    <p>Sudah punya akun? <a href="{{url_for('frontend.login')}}">Masuk disini</a></p>
+    <p class="mb-5">Sudah punya akun? <a href="{{url_for('frontend.login')}}">Masuk di sini</a></p>
     <button type="submit" class="btn btn-primary w-100" id="liveToastBtn">
-      Submit
+      Daftar
     </button>
   </form>
 </section>
