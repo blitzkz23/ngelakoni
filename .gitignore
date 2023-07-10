@@ -1,4 +1,4 @@
 *.env
 frontend-tailwind-demo/node_modules
-backend/migrations
+flask/migrations
 __pycache__/
